@@ -210,6 +210,7 @@ void *manage_song_state(void *args) {
     Screen *screen=((SongStateArgs*)args)->screen;
     int printed=0;
     while (1) {
+        fflush(stdout);
         sleep(1);
         if ((*current_state)->playing) {
             if (finished()) {

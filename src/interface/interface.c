@@ -20,7 +20,6 @@ Screen library_screen() {
             printf("[%s] %s\n",sel==i?"#":" ",opt[i]);
         }
         printf("\n\nDown (D) | Up (U) | Select (S) | Quit (Q): ");
-        fflush(stdin);
         unsigned char inp=getchar();
         if (inp=='D'||inp=='d') {
             add_command("Move down (Library)");
@@ -149,12 +148,12 @@ Screen add_song_screen(Song **songs) {
     while (strlen(title)==0) {
         printf("Enter song title: ");
         fflush(stdin);
-        scanf("%[^\n]",title);
+        scanf(" %[^\n]",title);
     }
     while (strlen(artist)==0) {
         printf("Enter song artist(s) name: ");
         fflush(stdin);
-        scanf("%[^\n]",artist);
+        scanf(" %[^\n]",artist);
     }
     while (duration==0) {
         printf("Enter song duration (in seconds): ");
@@ -165,7 +164,7 @@ Screen add_song_screen(Song **songs) {
     while (strlen(audio_file)==0) {
         printf("Enter audio file name (with extension, without path): ");
         fflush(stdin);
-        scanf("%[^\n]",audio_file);
+        scanf(" %[^\n]",audio_file);
     }
     fflush(stdin);
     char *audio_loc=malloc(250);
@@ -289,7 +288,7 @@ Screen add_album_screen(Song *songs, Album **albums) {
     while (strlen(title)==0) {
         printf("Enter album title: ");
         fflush(stdin);
-        scanf("%[^\n]",title);
+        scanf(" %[^\n]",title);
     }
     int sel=0;
     int n=length_songs(songs);
