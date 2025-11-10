@@ -94,7 +94,6 @@ void intro() {
     }
     erase(strlen("Loading"));
     printf("Press enter to start listening...");
-    fflush(stdin);
     getchar();
     add_command("Enter program");
     clear();

@@ -20,6 +20,11 @@ void clear() {
 #endif
 }
 
+void clear_buffer() {
+    char c;
+    while ((c=getchar())!='\n'&&c!=EOF);
+}
+
 void print_title() {
     printf(CYAN);
     printf("-------------------------------------------------------------------------------------------------------------------------------\n\n");

@@ -33,6 +33,7 @@ typedef struct SongStateArgs {
 } SongStateArgs;
 
 void clear();
+void clear_buffer();
 void print_title();
 void print_page_heading(Screen page);
 void erase(int no_char);
