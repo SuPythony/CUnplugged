@@ -1,0 +1,104 @@
+10-11-2025 09:48:24: Enter program
+
+10-11-2025 09:48:27: Move down (Library)
+
+10-11-2025 09:48:28: Move down (Library)
+
+10-11-2025 09:48:28: Move down (Library)
+
+10-11-2025 09:48:30: Move up (Library)
+
+10-11-2025 09:48:30: Move up (Library)
+
+10-11-2025 09:50:18: Enter program
+
+10-11-2025 09:50:19: Quit (Library)
+
+10-11-2025 09:50:45: Enter program
+
+10-11-2025 09:50:45: Quit (Library)
+
+10-11-2025 09:52:14: Enter program
+
+10-11-2025 09:52:15: Quit (Library)
+
+10-11-2025 09:54:41: Enter program
+
+10-11-2025 09:54:43: Quit (Library)
+
+10-11-2025 10:02:07: Enter program
+
+10-11-2025 10:02:08: Quit (Library)
+
+10-11-2025 10:02:12: Enter program
+
+10-11-2025 10:02:13: Move down (Library)
+
+10-11-2025 10:02:13: Move down (Library)
+
+10-11-2025 10:02:15: Move up (Library)
+
+10-11-2025 10:02:16: Move up (Library)
+
+10-11-2025 10:02:16: Move down (Library)
+
+10-11-2025 10:02:18: Quit (Library)
+
+10-11-2025 10:03:12: Enter program
+
+10-11-2025 10:03:13: Move down (Library)
+
+10-11-2025 10:03:13: Move down (Library)
+
+10-11-2025 10:03:14: Quit (Library)
+
+10-11-2025 10:04:07: Move down (Library)
+
+10-11-2025 10:04:09: Move down (Library)
+
+10-11-2025 10:04:11: Move up (Library)
+
+10-11-2025 10:04:12: Move up (Library)
+
+10-11-2025 10:04:13: Move down (Library)
+
+10-11-2025 10:04:13: Move down (Library)
+
+10-11-2025 10:04:15: Move up (Library)
+
+10-11-2025 10:04:16: Select (Library)
+
+10-11-2025 10:04:18: Add albums (Albums)
+
+10-11-2025 10:04:25: Add albums (Albums)
+
+10-11-2025 10:04:38: Back (Albums)
+
+10-11-2025 10:04:39: Move down (Library)
+
+10-11-2025 10:04:39: Move down (Library)
+
+10-11-2025 10:04:39: Select (Library)
+
+10-11-2025 10:04:41: Back (Playlist)
+
+10-11-2025 10:05:05: Move down (Library)
+
+10-11-2025 10:05:06: Move down (Library)
+
+10-11-2025 10:05:07: Move up (Library)
+
+10-11-2025 10:05:07: Move up (Library)
+
+10-11-2025 10:05:09: Quit (Library)
+
+10-11-2025 10:07:07: Quit (Library)
+
+10-11-2025 10:07:25: Quit (Library)
+
+10-11-2025 10:07:30: Quit (Library)
+
+10-11-2025 10:09:54: Quit (Library)
+
+10-11-2025 10:09:59: Quit (Library)
+

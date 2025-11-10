@@ -43,7 +43,7 @@ Album *load_albums() {
             album_file=readdir(albums_dir);
             continue;
         }
-        char album_name[100+album_file->d_namlen];
+        char album_name[356];
         strcpy(album_name,BASE_DIR);
         strcat(album_name,"/albums/");
         strcat(album_name,album_file->d_name);

@@ -87,6 +87,7 @@ void intro() {
         for (int j=1; j<=3; j++) {
             printf("\rLoading");
             for (int k=0; k<j; k++) printf(".");
+            fflush(stdout);
             sleep(1);
         }
         erase(3);

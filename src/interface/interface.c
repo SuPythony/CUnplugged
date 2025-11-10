@@ -58,6 +58,7 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
         if (*songs==NULL) {
             printf("No songs added in library yet");
             printf("\n\n\nAdd a song (A) | Back (B) | Quit (Q): ");
+            fflush(stdin);
             unsigned char inp=getchar();
             if (inp=='A'||inp=='a') {
                 add_command("Add song (Songs)");
@@ -586,16 +587,20 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
             }
         }
         printf("\n\n");
-        song=songs;
         printf("Songs:\n\n");
-        while (song!=NULL) {
-            int min=song->duration/60;
-            int sec=song->duration%60;
-            printf(is_sel[ind]?NORMAL:DIM);
-            printf("[%s] %s - %s %02d:%02d\n",ind==sel?"#":" ",song->title,song->artist,min,sec);
-            printf(CRESET);
-            ind++;
-            song=song->next;
+        song=songs;
+        if (song==NULL) {
+            printf("No songs added yet\n");
+        } else {
+            while (song!=NULL) {
+                int min=song->duration/60;
+                int sec=song->duration%60;
+                printf(is_sel[ind]?NORMAL:DIM);
+                printf("[%s] %s - %s %02d:%02d\n",ind==sel?"#":" ",song->title,song->artist,min,sec);
+                printf(CRESET);
+                ind++;
+                song=song->next;
+            }
         }
         printf("\nAlbums:\n\n");
         Album *album=albums;

@@ -50,7 +50,7 @@ Song *load_songs() {
             song_file=readdir(songs_dir);
             continue;
         }
-        char song_name[100+song_file->d_namlen];
+        char song_name[356];
         strcpy(song_name,BASE_DIR);
         strcat(song_name,"/songs/");
         strcat(song_name,song_file->d_name);

@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 
 void clear() {
+    fflush(stdout);
 #ifdef _WIN32
     system("cls");
 #else
