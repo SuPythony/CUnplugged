@@ -1,0 +1,5 @@
+build/
+library/
+CUnplugged.exe
+.idea/
+cmake-build-debug/
