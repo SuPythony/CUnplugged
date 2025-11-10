@@ -12,7 +12,7 @@ void add_command(char *command) {
     strcat(c,command);
     strcat(c,"\n");
     char f_name[100];
-    sprintf(f_name,"%s\\log.txt",BASE_DIR);
+    sprintf(f_name,"%s/log.txt",BASE_DIR);
     FILE *f=fopen(f_name,"a");
     fprintf(f,"%s\n",c);
     fclose(f);

@@ -36,6 +36,7 @@ void clear();
 void print_title();
 void print_page_heading(Screen page);
 void erase(int no_char);
+void make_dir(char *name);
 void check_base_dir();
 int length_songs(Song *song);
 int length_albums(Album *album);

@@ -160,7 +160,7 @@ Screen add_song_screen(Song **songs) {
         fflush(stdin);
         scanf("%d",&duration);
     }
-    printf("\n(Save the song audio file in library\\songs\\audios)\n");
+    printf("\n(Save the song audio file in library/songs/audios)\n");
     while (strlen(audio_file)==0) {
         printf("Enter audio file name (with extension, without path): ");
         fflush(stdin);
@@ -169,7 +169,7 @@ Screen add_song_screen(Song **songs) {
     fflush(stdin);
     char *audio_loc=malloc(250);
     strcpy(audio_loc,BASE_DIR);
-    strcat(audio_loc,"\\audios\\");
+    strcat(audio_loc,"/audios/");
     strcat(audio_loc,audio_file);
     *songs=create_new_song(*songs,(long long)rand()*rand(),title,artist,duration,audio_loc);
     char c[250];

@@ -8,6 +8,8 @@
 #include "playlist/playlist.h"
 #include <unistd.h>
 #include "audio_controller/audio_controller.h"
+#include <string.h>
+#include <sys/stat.h>
 
 void clear() {
 #ifdef _WIN32
@@ -133,10 +135,18 @@ void erase(int no_char) {
     for (int i=0; i<no_char; i++) printf("\b");
 }
 
+void make_dir(char *name) {
+#ifdef _WIN32
+    mkdir(name);
+#else
+    mkdir(name,0777);
+#endif
+}
+
 void check_base_dir() {
     DIR *dir=opendir(BASE_DIR);
     if (dir==NULL) {
-        mkdir(BASE_DIR);
+        make_dir(BASE_DIR);
     }
     closedir(dir);
 }

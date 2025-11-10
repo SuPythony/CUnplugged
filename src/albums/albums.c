@@ -27,13 +27,12 @@ Album *parse_album_file(char *f_name) {
 }
 
 Album *load_albums() {
-    check_base_dir();
     char dir_name[100];
     strcpy(dir_name,BASE_DIR);
-    strcat(dir_name,"\\albums");
+    strcat(dir_name,"/albums");
     DIR *albums_dir=opendir(dir_name);
     if (albums_dir==NULL) {
-        mkdir(dir_name);
+        make_dir(dir_name);
         albums_dir=opendir(dir_name);
     }
     struct dirent *album_file=readdir(albums_dir);
@@ -46,7 +45,7 @@ Album *load_albums() {
         }
         char album_name[100+album_file->d_namlen];
         strcpy(album_name,BASE_DIR);
-        strcat(album_name,"\\albums\\");
+        strcat(album_name,"/albums/");
         strcat(album_name,album_file->d_name);
         Album *next_album=parse_album_file(album_name);
         if (albums==NULL) {
@@ -65,7 +64,7 @@ Album *load_albums() {
 
 Album *create_new_album(Album *albums, long long id, char *title, int song_count, long long *song_ids) {
     char f_name[250];
-    sprintf(f_name,"%s\\albums\\%lld.txt",BASE_DIR,id);
+    sprintf(f_name,"%s/albums/%lld.txt",BASE_DIR,id);
     FILE *f=fopen(f_name,"w");
     fprintf(f,"%lld\n",id);
     fprintf(f,"%s\n",title);
@@ -90,7 +89,7 @@ Album *create_new_album(Album *albums, long long id, char *title, int song_count
 
 void write_album_file(Album *album) {
     char f_name[250];
-    sprintf(f_name,"%s\\albums\\%lld.txt",BASE_DIR,album->id);
+    sprintf(f_name,"%s/albums/%lld.txt",BASE_DIR,album->id);
     FILE *f=fopen(f_name,"w");
     fprintf(f,"%lld\n",album->id);
     fprintf(f,"%s\n",album->title);
@@ -141,7 +140,7 @@ Album *delete_album(Album *albums, long long id) {
                 ret=albums;
             }
             char f_name[250];
-            sprintf(f_name,"%s\\albums\\%lld.txt",BASE_DIR,album->id);
+            sprintf(f_name,"%s/albums/%lld.txt",BASE_DIR,album->id);
             remove(f_name);
             free(album);
             break;

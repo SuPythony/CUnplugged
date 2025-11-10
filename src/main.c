@@ -20,6 +20,7 @@ int main() {
     clear();
     srand(time(NULL)); rand();
     init_audio();
+    check_base_dir();
     intro();
     Song *songs=load_songs();
     Album *albums=load_albums();

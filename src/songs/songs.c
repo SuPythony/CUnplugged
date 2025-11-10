@@ -26,21 +26,20 @@ Song *parse_song_file(char *f_name) {
 }
 
 Song *load_songs() {
-    check_base_dir();
     char dir_name[100];
     strcpy(dir_name,BASE_DIR);
-    strcat(dir_name,"\\songs");
+    strcat(dir_name,"/songs");
     DIR *songs_dir=opendir(dir_name);
     if (songs_dir==NULL) {
-        mkdir(dir_name);
+        make_dir(dir_name);
         songs_dir=opendir(dir_name);
     }
     char audio_dir[150];
     strcpy(audio_dir,BASE_DIR);
-    strcat(audio_dir,"\\audios");
+    strcat(audio_dir,"/audios");
     DIR *audios=opendir(audio_dir);
     if (audios==NULL) {
-        mkdir(audio_dir);
+        make_dir(audio_dir);
     }
     closedir(audios);
     struct dirent *song_file=readdir(songs_dir);
@@ -53,7 +52,7 @@ Song *load_songs() {
         }
         char song_name[100+song_file->d_namlen];
         strcpy(song_name,BASE_DIR);
-        strcat(song_name,"\\songs\\");
+        strcat(song_name,"/songs/");
         strcat(song_name,song_file->d_name);
         Song *next_song=parse_song_file(song_name);
         if (songs==NULL||song==NULL) {
@@ -72,7 +71,7 @@ Song *load_songs() {
 
 Song *create_new_song(Song *songs, long long id, char *title, char *artist, int dur, char *loc) {
     char f_name[250];
-    sprintf(f_name,"%s\\songs\\%lld.txt",BASE_DIR,id);
+    sprintf(f_name,"%s/songs/%lld.txt",BASE_DIR,id);
     FILE *f=fopen(f_name,"w");
     fprintf(f,"%lld\n",id);
     fprintf(f,"%s\n",title);
@@ -111,7 +110,7 @@ Song *delete_song(Song *songs, long long id, Album *albums) {
                 ret=songs;
             }
             char f_name[250];
-            sprintf(f_name,"%s\\songs\\%lld.txt",BASE_DIR,song->id);
+            sprintf(f_name,"%s/songs/%lld.txt",BASE_DIR,song->id);
             remove(f_name);
             free(song);
             break;
