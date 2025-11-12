@@ -14,6 +14,7 @@ A C based music player and browser.
 ## How to use
 
 - It is recommended to make the console window full-screen.
+- Use the make command to compile the project.
 - On startup, wait for the player to load up.
 - Select the section you want to navigate to in the library.
 - You can manage your songs in the Songs section and all your albums in the Albums section.
