@@ -75,8 +75,6 @@ int main() {
     }
     outro();
     uninit_audio();
-    pthread_cancel(song_state_thread);
-    pthread_join(song_state_thread,NULL);
     free_memory(songs,albums,playlist,current_state);
     return 0;
 }
@@ -85,16 +83,13 @@ void intro() {
     clear();
     printf("Welcome to\n\n");
     print_title();
-    for (int i=0; i<2; i++) {
-        for (int j=1; j<=3; j++) {
-            printf("\rLoading");
-            for (int k=0; k<j; k++) printf(".");
-            fflush(stdout);
-            sleep(1);
-        }
-        erase(3);
+    for (int i=1; i<=3; i++) {
+        printf("\rLoading");
+        for (int k=0; k<i; k++) printf(".");
+        fflush(stdout);
+        sleep(1);
     }
-    erase(strlen("Loading"));
+    erase(strlen("Loading..."));
     printf("Press enter to start listening...");
     getchar();
     add_command("Enter program");

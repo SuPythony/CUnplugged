@@ -25,6 +25,16 @@ void clear_buffer() {
     while ((c=getchar())!='\n'&&c!=EOF);
 }
 
+char char_inp() {
+    char s[100];
+    fgets(s,sizeof(s),stdin);
+    for (int i=0; i<100; i++) {
+        if (s[i]==' '||s[i]=='\n'||s[i]==EOF) continue;
+        return s[i];
+    }
+    return ' ';
+}
+
 void print_title() {
     printf(CYAN);
     printf("-------------------------------------------------------------------------------------------------------------------------------\n\n");

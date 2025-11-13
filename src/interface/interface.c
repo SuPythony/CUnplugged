@@ -20,7 +20,7 @@ Screen library_screen() {
             printf("[%s] %s\n",sel==i?"#":" ",opt[i]);
         }
         printf("\n\nDown (D) | Up (U) | Select (S) | Quit (Q): ");
-        char inp; scanf(" %c",&inp);
+        char inp=char_inp();
         if (inp=='D'||inp=='d') {
             add_command("Move down (Library)");
             if (sel<n-1) sel++;;
@@ -57,7 +57,7 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
         if (*songs==NULL) {
             printf("No songs added in library yet");
             printf("\n\n\nAdd a song (A) | Back (B) | Quit (Q): ");
-            char inp; scanf(" %c",&inp);
+            char inp=char_inp();
             if (inp=='A'||inp=='a') {
                 add_command("Add song (Songs)");
                 res=ADD_SONG;
@@ -81,7 +81,7 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
                 song=song->next;
             }
             printf("\n\n\nDown (D) | Up (U) | Add a song (A) | Delete song (X) | Back (B) | Quit (Q): ");
-            char inp; scanf(" %c",&inp);
+            char inp=char_inp();
             if (inp=='D'||inp=='d') {
                 add_command("Move down (Songs)");
                 if (sel<n-1) sel++;
@@ -96,7 +96,7 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
                 add_command("Delete song (Songs)");
                 printf("\nAre you sure you want to delete the selected song?");
                 printf("\nYes (Y) | No (*): ");
-                char inp2; scanf(" %c",&inp2);
+                char inp2=char_inp();
                 if (inp2=='Y'||inp2=='y') {
                     add_command("Yes (Songs)");
                     ind=0;
@@ -105,7 +105,6 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
                         if (ind==sel) {
                             if (current_state->playing&&current_state->playing_song_id==song->id) {
                                 printf("Song currently playing\nPress enter to continue...");
-                                clear_buffer();
                                 getchar();
                                 break;
                             }
@@ -184,7 +183,7 @@ AlbumsScreenReturn albums_screen(Album **albums) {
         if (*albums==NULL) {
             printf("No albums added in library yet");
             printf("\n\n\nAdd an album (A) | Back (B) | Quit (Q): ");
-            char inp; scanf(" %c",&inp);
+            char inp=char_inp();
             if (inp=='A'||inp=='a') {
                 add_command("Add albums (Albums)");
                 res.screen=ADD_ALBUM;
@@ -206,7 +205,7 @@ AlbumsScreenReturn albums_screen(Album **albums) {
                 album=album->next;
             }
             printf("\n\n\nDown (D) | Up (U) | Add an album (A) | Delete album (X) | View Album (V) | Edit Album (E) | Back (B) | Quit (Q): ");
-            char inp; scanf(" %c",&inp);
+            char inp=char_inp();
             if (inp=='D'||inp=='d') {
                 add_command("Move down (Albums)");
                 if (sel<n-1) sel++;
@@ -221,7 +220,7 @@ AlbumsScreenReturn albums_screen(Album **albums) {
                 add_command("Delete album (Albums)");
                 printf("\nAre you sure you want to delete the selected album?");
                 printf("\nYes (Y) | No (*): ");
-                char inp2; scanf(" %c",&inp2);
+                char inp2=char_inp();
                 if (inp2=='Y'||inp2=='y') {
                     add_command("Yes (Albums)");
                     ind=0;
@@ -268,7 +267,6 @@ Screen add_album_screen(Song *songs, Album **albums) {
     if (songs==NULL) {
         printf("No songs added in library yet\n.");
         printf("Press enter to return...");
-        clear_buffer();
         getchar();
         return ALBUMS;
     }
@@ -278,6 +276,7 @@ Screen add_album_screen(Song *songs, Album **albums) {
         printf("Enter album title: ");
         scanf(" %[^\n]",title);
     }
+    clear_buffer();
     int sel=0;
     int n=length_songs(songs);
     int is_sel[n];
@@ -297,7 +296,7 @@ Screen add_album_screen(Song *songs, Album **albums) {
             song=song->next;
         }
         printf("\n\n\nDown (D) | Up (U) | %s | Save (S) | Cancel (C) | Quit (Q): ",is_sel[sel]?"Remove from album (R)":"Add to album (A)");
-        char inp; scanf(" %c",&inp);
+        char inp=char_inp();
         if (inp=='D'||inp=='d') {
             add_command("Move down (Add Album)");
             if (sel<n-1) sel++;
@@ -319,7 +318,6 @@ Screen add_album_screen(Song *songs, Album **albums) {
             if (song_count==0) {
                 printf("Select at least one song\n");
                 printf("Press enter to continue...");
-                clear_buffer();
                 getchar();
                 continue;
             }
@@ -339,7 +337,6 @@ Screen add_album_screen(Song *songs, Album **albums) {
             free(song_ids);
             printf("\n\nAlbum added successfully!\n");
             printf("Press enter to return...");
-            clear_buffer();
             getchar();
             break;
         } else if (inp=='C'||inp=='c') {
@@ -382,7 +379,6 @@ Screen view_album_screen(Song *songs, Album *albums, int album_ind) {
     }
     printf("\n");
     printf("Press enter to return...");
-    clear_buffer();
     getchar();
     return ALBUMS;
 }
@@ -431,7 +427,7 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
             song=song->next;
         }
         printf("\n\n\nDown (D) | Up (U) | %s | Save (S) | Cancel (C) | Quit (Q): ",is_sel[sel]?"Remove from album (R)":"Add to album (A)");
-        char inp; scanf(" %c",&inp);
+        char inp=char_inp();
         if (inp=='D'||inp=='d') {
             add_command("Move down (Edit Album)");
             if (sel<n-1) sel++;
@@ -453,7 +449,6 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
             if (song_count==0) {
                 printf("Select at least one song\n");
                 printf("Press enter to continue...");
-                clear_buffer();
                 getchar();
                 continue;
             }
@@ -474,7 +469,6 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
             write_album_file(album);
             printf("\n\nAlbum edited successfully!\n");
             printf("Press enter to return...");
-            clear_buffer();
             getchar();
             break;
         } else if (inp=='C'||inp=='c') {
@@ -507,7 +501,7 @@ Screen playlist_screen(Playlist *playlist, CurrentState *current_state) {
             }
         }
         printf("\n\n\nEdit Playlist (E) |%s Back (B) | Quit (Q): ",playlist==NULL?"":" Music Controls (C) |");
-        char inp; scanf(" %c",&inp);
+        char inp=char_inp();
         if (inp=='E'||inp=='e') {
             add_command("Edit Playlist (Playlist)");
             res=EDIT_PL;
@@ -599,7 +593,7 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
             }
         }
         printf("\n\n\nDown (D) | Up (U) | %s | Add all songs (L) | Clear playlist (C) | Back (B) | Quit (Q): ",sel<n&&is_sel[sel]?"Remove from playlist (R)":"Add to playlist (A)");
-        char inp; scanf(" %c",&inp);
+        char inp=char_inp();
         if (inp=='D'||inp=='d') {
             add_command("Move down (Edit Playlist)");
             if (sel<n+n2-1) sel++;
@@ -647,7 +641,6 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
             }
             if (current_state->playing&&current_state->playing_song_id==song->id) {
                 printf("Song currently playing\nPress enter to continue...");
-                clear_buffer();
                 getchar();
                 continue;
             }
@@ -672,7 +665,6 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
                 if (is_sel[i]) {
                     if (current_state->playing&&current_state->playing_song_id==song->id) {
                         printf("Song currently playing\nPress enter to continue...");
-                        clear_buffer();
                         getchar();
                         continue;
                     }
@@ -702,11 +694,11 @@ Screen music_control_screen(Playlist *playlist, CurrentState *current_state) {
         while (pl!=NULL) {
             int min=pl->song->duration/60;
             int sec=pl->song->duration%60;
-            printf("%s %s - %s %02d:%02d\n",pl->song->id==current_state->playing_song_id?"->":"  ",pl->song->title,pl->song->artist,min,sec);
+            printf("%s %s - %s %02d:%02d\n",current_state->playing&&pl->song->id==current_state->playing_song_id?"->":"  ",pl->song->title,pl->song->artist,min,sec);
             pl=pl->next;
         }
         printf("\n\n\n%s (P) %s| Next Song (N) | Previous Song (R) | Back (B) | Quit (Q): ",current_state->playing?"Pause":"Play",current_state->playing_song_id!=0?"| Restart song (S) ":"");
-        char inp; scanf(" %c",&inp);
+        char inp=char_inp();
         if (inp=='P'||inp=='p') {
             if (current_state->playing) add_command("Pause song (Music Control)");
             else add_command("Play song (Music Control)");
@@ -728,9 +720,9 @@ Screen music_control_screen(Playlist *playlist, CurrentState *current_state) {
             }
             if (er) {
                 current_state->playing=0;
+                current_state->playing_song_id=0;
                 printf("Can't open audio file.\n");
                 printf("Press enter to continue...");
-                clear_buffer();
                 getchar();
                 continue;
             }
@@ -762,9 +754,9 @@ Screen music_control_screen(Playlist *playlist, CurrentState *current_state) {
             er=load_song(to_play->song->audio_loc);
             if (er) {
                 current_state->playing=0;
+                current_state->playing_song_id=0;
                 printf("Can't open audio file.\n");
                 printf("Press enter to continue...");
-                clear_buffer();
                 getchar();
                 continue;
             }
@@ -794,9 +786,9 @@ Screen music_control_screen(Playlist *playlist, CurrentState *current_state) {
             er=load_song(to_play->song->audio_loc);
             if (er) {
                 current_state->playing=0;
+                current_state->playing_song_id=0;
                 printf("Can't open audio file.\n");
                 printf("Press enter to continue...");
-                clear_buffer();
                 getchar();
                 continue;
             }
