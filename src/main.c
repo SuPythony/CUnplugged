@@ -21,7 +21,7 @@ int main() {
     srand(time(NULL)); rand();
     init_audio();
     check_base_dir();
-    intro();
+    //intro();
     Song *songs=load_songs();
     Album *albums=load_albums();
     Playlist *playlist=NULL;
@@ -75,6 +75,8 @@ int main() {
     }
     outro();
     uninit_audio();
+    pthread_cancel(song_state_thread);
+    pthread_join(song_state_thread,NULL);
     free_memory(songs,albums,playlist,current_state);
     return 0;
 }

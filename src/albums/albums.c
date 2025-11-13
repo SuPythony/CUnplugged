@@ -142,6 +142,8 @@ Album *delete_album(Album *albums, long long id) {
             char f_name[250];
             sprintf(f_name,"%s/albums/%lld.txt",BASE_DIR,album->id);
             remove(f_name);
+            free(album->title);
+            free(album->song_ids);
             free(album);
             break;
         }

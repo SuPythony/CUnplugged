@@ -112,6 +112,9 @@ Song *delete_song(Song *songs, long long id, Album *albums) {
             char f_name[250];
             sprintf(f_name,"%s/songs/%lld.txt",BASE_DIR,song->id);
             remove(f_name);
+            free(song->title);
+            free(song->artist);
+            free(song->audio_loc);
             free(song);
             break;
         }

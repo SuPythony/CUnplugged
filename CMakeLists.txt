@@ -13,8 +13,6 @@ add_executable(MusicPlayer src/main.c
         src/songs/songs.h
         src/albums/albums.c
         src/albums/albums.h
-        src/albums/albums.c
-        src/albums/albums.h
         src/lib/miniaudio/miniaudio.c
         src/lib/miniaudio/miniaudio.h
         src/interface/interface.c

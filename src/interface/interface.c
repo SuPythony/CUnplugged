@@ -159,7 +159,7 @@ Screen add_song_screen(Song **songs) {
         printf("Enter audio file name (with extension, without path): ");
         scanf(" %[^\n]",audio_file);
     }
-    char *audio_loc=malloc(250);
+    char audio_loc[250];
     strcpy(audio_loc,BASE_DIR);
     strcat(audio_loc,"/audios/");
     strcat(audio_loc,audio_file);
@@ -336,6 +336,7 @@ Screen add_album_screen(Song *songs, Album **albums) {
                 song=song->next;
             }
             *albums=create_new_album(*albums,(long long)rand()*rand(),title,song_count,song_ids);
+            free(song_ids);
             printf("\n\nAlbum added successfully!\n");
             printf("Press enter to return...");
             clear_buffer();
