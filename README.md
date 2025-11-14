@@ -25,6 +25,6 @@ A C based music player and browser.
 - In the music controls, you can play the songs and manage playback.
 - When you leave music controls, the songs will continue playing in the background, and proceed as per the playlist.
 
-## Disclaimer
+## External Libraries and AI
 
-AI was only used for help with the Makefile (making it work on both OS). The miniaudio library was used for playing the audio. Everything else was done without AI and uses no external libraries.
+The only external library used is miniaudio for playing the songs. AI wasn't used anywhere, except only for help in making the Makefile OS independent.
