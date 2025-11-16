@@ -167,7 +167,7 @@ Screen add_song_screen(Song **songs) {
     strcpy(audio_loc,BASE_DIR);
     strcat(audio_loc,"/audios/");
     strcat(audio_loc,audio_file);
-    *songs=create_new_song(*songs,(long long)rand()*rand(),title,artist,duration,audio_loc);
+    *songs=create_new_song(*songs,title,artist,duration,audio_loc);
     char c[250];
     sprintf(c,"Song (%s) added (Add Song)",title);
     add_command(c);

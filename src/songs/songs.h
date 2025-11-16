@@ -16,7 +16,7 @@ typedef struct Song {
 
 Song *parse_song_file(char *name);
 Song *load_songs();
-Song *create_new_song(Song *songs, long long id, char *title, char *artist, int dur, char *loc);
+Song *create_new_song(Song *songs, char *title, char *artist, int dur, char *loc);
 Song *delete_song(Song *songs, long long id, Album *albums);
 
 #endif

@@ -3,6 +3,7 @@
 #include "utils/utils.h"
 #include <dirent.h>
 #include <string.h>
+#include <ctype.h>
 #include "songs.h"
 #include "albums/albums.h"
 
@@ -69,11 +70,13 @@ Song *load_songs() {
     return songs;
 }
 
-Song *create_new_song(Song *songs, long long id, char *title, char *artist, int dur, char *loc) {
+Song *create_new_song(Song *songs, char *title, char *artist, int dur, char *loc) {
     char f_name[250];
-    sprintf(f_name,"%s/songs/%lld.txt",BASE_DIR,id);
+    char id[100];
+    sprintf(id,"%d%d%d",toupper(title[0]),(rand()*rand())%9000+1000,(rand()*rand())%9000+1000);
+    sprintf(f_name,"%s/songs/%s.txt",BASE_DIR,id);
     FILE *f=fopen(f_name,"w");
-    fprintf(f,"%lld\n",id);
+    fprintf(f,"%s\n",id);
     fprintf(f,"%s\n",title);
     fprintf(f,"%s\n",artist);
     fprintf(f,"%d\n",dur);
@@ -83,12 +86,20 @@ Song *create_new_song(Song *songs, long long id, char *title, char *artist, int 
     if (songs==NULL) {
         songs=song;
     } else {
-        Song *end=songs;
-        while (end->next!=NULL) {
-            end=end->next;
+        Song *aft=songs;
+        if (atoll(id)<aft->id) {
+            song->next=songs;
+            songs->prev=song;
+            songs=song;
+        } else {
+            while (aft->next!=NULL) {
+                if (atoll(id)>aft->id&&atoll(id)<aft->next->id) break;
+                aft=aft->next;
+            }
+            song->next=aft->next;
+            song->prev=aft;
+            aft->next=song;
         }
-        end->next=song;
-        song->prev=end;
     }
     return songs;
 }
