@@ -108,6 +108,14 @@ void add_song_to_album(Album *album, long long song_id) {
 }
 
 void remove_song_from_album(Album *album, long long song_id) {
+    if (album->song_count==1) {
+        if (album->song_ids[0]==song_id) {
+            album->song_count--;
+            album->song_ids=realloc(album->song_ids,0);
+            write_album_file(album);
+        }
+        return;
+    }
     int shift=0;
     for (int i=0; i<album->song_count-1; i++) {
         if (album->song_ids[i]==song_id) {

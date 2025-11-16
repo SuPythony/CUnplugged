@@ -221,6 +221,7 @@ void free_albums(Album *list) {
     }
 }
 void free_playlist(Playlist *list) {
+    if (list==NULL) return;
     while (1) {
         if (list->tail) {
             free(list);

@@ -202,7 +202,7 @@ AlbumsScreenReturn albums_screen(Album **albums) {
             Album *album=*albums;
             int ind=0;
             while (album!=NULL) {
-                printf("[%s] %s - %d songs\n",ind==sel?"#":" ",album->title,album->song_count);
+                printf("[%s] %s - %d song(s)\n",ind==sel?"#":" ",album->title,album->song_count);
                 ind++;
                 album=album->next;
             }
@@ -362,22 +362,26 @@ Screen view_album_screen(Song *songs, Album *albums, int album_ind) {
         ind++;
     }
     printf("Title: %s\n",album->title);
-    printf("%d Songs\n\n",album->song_count);
-    Song *song=songs;
-    while (song!=NULL) {
-        int in_album=0;
-        for (int i=0; i<album->song_count; i++) {
-            if (album->song_ids[i]==song->id) {
-                in_album=1;
-                break;
+    printf("%d Song(s)\n\n",album->song_count);
+    if (album->song_count==0) {
+        printf("Album is empty\n");
+    } else {
+        Song *song=songs;
+        while (song!=NULL) {
+            int in_album=0;
+            for (int i=0; i<album->song_count; i++) {
+                if (album->song_ids[i]==song->id) {
+                    in_album=1;
+                    break;
+                }
             }
+            if (in_album) {
+                int min=song->duration/60;
+                int sec=song->duration%60;
+                printf("%s - %s %02d:%02d\n",song->title,song->artist,min,sec);
+            }
+            song=song->next;
         }
-        if (in_album) {
-            int min=song->duration/60;
-            int sec=song->duration%60;
-            printf("%s - %s %02d:%02d\n",song->title,song->artist,min,sec);
-        }
-        song=song->next;
     }
     printf("\n");
     printf("Press enter to return...");
@@ -417,6 +421,12 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
         print_page_heading(EDIT_ALBUM);
         printf("Title: %s\n",album->title);
         printf("%d Songs\n\n",album->song_count);
+        if (n==0) {
+            printf("No songs added in library yet\n");
+            printf("Press enter to return...");
+            getchar();
+            break;
+        }
         song=songs;
         ind=0;
         while (song!=NULL) {
