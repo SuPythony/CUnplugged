@@ -110,6 +110,9 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
                                 getchar();
                                 break;
                             }
+                            if (current_state->playing_song_id==song->id) {
+                                current_state->playing_song_id=0;
+                            }
                             *playlist=remove_song_from_playlist(*playlist,song);
                             *songs=delete_song(*songs,song->id,albums);
                             break;
@@ -721,6 +724,9 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
                         continue;
                     }
                     is_sel[i]=0;
+                    if (current_state->playing_song_id==song->id) {
+                        current_state->playing_song_id=0;
+                    }
                     *playlist=remove_song_from_playlist(*playlist,song);
                 }
                 song=song->next;
