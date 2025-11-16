@@ -47,6 +47,9 @@ int main() {
                 screen=ret.screen;
                 data=ret.album_ind;
                 break;
+            case LOGS:
+                screen=logs_screen();
+                break;
             case ADD_SONG:
                 screen=add_song_screen(&songs);
                 break;

@@ -2,5 +2,6 @@
 #define MUSIC_COMMAND_LOG
 
 void add_command(char *command);
+void clear_logs();
 
 #endif

@@ -11,8 +11,8 @@
 
 Screen library_screen() {
     int sel=0;
-    char *opt[]={"Songs", "Albums", "Playlist"};
-    int n=3;
+    char *opt[]={"Songs", "Albums", "Playlist", "Log"};
+    int n=4;
     while (1) {
         clear();
         print_page_heading(LIBRARY);
@@ -42,6 +42,8 @@ Screen library_screen() {
         return ALBUMS;
     } else if (sel==2) {
         return PLAYLIST;
+    } else if (sel==3) {
+        return LOGS;
     } else {
         return QUIT;
     }
@@ -480,6 +482,38 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
         }
     }
     return ALBUMS;
+}
+
+Screen logs_screen() {
+    char f_name[100];
+    sprintf(f_name,"%s/log.txt",BASE_DIR);
+    while (1) {
+        clear();
+        print_page_heading(LOGS);
+        printf("\n\n");
+        FILE *f=fopen(f_name,"r");
+        if (f==NULL) {
+            printf("No logs yet\n");
+        } else {
+            char c[300];
+            while (fgets(c,sizeof(c),f)!=NULL) {
+                printf("%s\n",c);
+            }
+            fclose(f);
+        }
+        printf("\nClear logs (C) | Back (B) | Quit (Q): ");
+        char inp=char_inp();
+        if (inp=='C'||inp=='c') {
+            clear_logs();
+            add_command("Clear logs (Logs)");
+        } else if (inp=='B'||inp=='b') {
+            add_command("Back (Logs)");
+            return LIBRARY;
+        } else if (inp=='Q'||inp=='q') {
+            add_command("Quit (Logs)");
+            return QUIT;
+        }
+    }
 }
 
 Screen playlist_screen(Playlist *playlist, CurrentState *current_state) {

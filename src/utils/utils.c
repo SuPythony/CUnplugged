@@ -78,6 +78,15 @@ void print_page_heading(Screen page) {
             printf("#   # ##### ####   ###  #   # ####\n\n\n");
             printf(CRESET);
             break;
+        case LOGS:
+            printf(BLUE);
+            printf("#      ###   ###   ####\n");
+            printf("#     #   # #     #\n");
+            printf("#     #   # #  ##  ###\n");
+            printf("#     #   # #   #     #\n");
+            printf("#####  ###   ###  ####\n");
+            printf(CRESET);
+            break;
         case ADD_SONG:
             printf(GREEN);
             printf(" ###  ####  ####      ####  ###  #   #  ###\n");

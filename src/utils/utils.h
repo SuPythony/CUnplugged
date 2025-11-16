@@ -12,6 +12,7 @@ typedef enum Screen {
     LIBRARY,
     SONGS,
     ALBUMS,
+    LOGS,
     ADD_SONG,
     ADD_ALBUM,
     VIEW_ALBUM,
