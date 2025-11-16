@@ -6,25 +6,29 @@
 Playlist *add_song_to_playlist(Playlist *playlist, Song *song) {
     if (playlist==NULL) {
         Playlist *pl=malloc(sizeof(Playlist));
-        pl->prev=NULL;
-        pl->next=NULL;
+        pl->prev=pl;
+        pl->next=pl;
         pl->song=song;
+        pl->head=1;
+        pl->tail=1;
         return pl;
     }
     Playlist *pl=playlist;
-    while (pl->next!=NULL) {
+    while (1) {
         if (pl->song==song) {
             return playlist;
         }
+        if (pl->tail) break;
         pl=pl->next;
-    }
-    if (pl->song==song) {
-        return playlist;
     }
     pl->next=malloc(sizeof(Playlist));
     pl->next->prev=pl;
-    pl->next->next=NULL;
+    pl->next->next=playlist;
     pl->next->song=song;
+    pl->tail=0;
+    pl->next->tail=1;
+    pl->next->head=0;
+    playlist->prev=pl->next;
     return playlist;
 }
 
@@ -47,22 +51,24 @@ Playlist *add_album_to_playlist(Playlist *playlist, Album *album, Song *songs) {
 Playlist *remove_song_from_playlist(Playlist *playlist, Song *song) {
     Playlist *pl=playlist;
     Playlist *ret=playlist;
-    while (pl!=NULL) {
+    if (pl==NULL) return ret;
+    while (1) {
         if (pl->song->id==song->id) {
-            if (pl->prev!=NULL) pl->prev->next=pl->next;
-            if (pl->next!=NULL) pl->next->prev=pl->prev;
-            if (pl->prev==NULL) {
-                if (pl->next==NULL) {
-                    ret=NULL;
-                } else {
-                    ret=pl->next;
-                }
-            } else {
-                ret=playlist;
+            if (pl->head&&pl->tail) {
+                ret=NULL;
+                free(pl);
+                break;
+            }
+            pl->prev->next=pl->next;
+            pl->next->prev=pl->prev;
+            if (pl->head) {
+                pl->next->head=1;
+                ret=pl->next;
             }
             free(pl);
             break;
         }
+        if (pl->tail) break;
         pl=pl->next;
     }
     return ret;

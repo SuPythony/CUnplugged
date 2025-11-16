@@ -221,7 +221,11 @@ void free_albums(Album *list) {
     }
 }
 void free_playlist(Playlist *list) {
-    while (list!=NULL) {
+    while (1) {
+        if (list->tail) {
+            free(list);
+            break;
+        }
         Playlist *temp=list->next;
         free(list);
         list=temp;
@@ -245,20 +249,16 @@ void *manage_song_state(void *args) {
                     (*current_state)->playing_song_id=0;
                     continue;
                 }
-                while (pl!=NULL) {
+                while (1) {
                     if (pl->song->id==(*current_state)->playing_song_id) {
                         break;
                     }
+                    if (pl->tail) break;
                     pl=pl->next;
                 }
-                Playlist *to_play;
                 stop_playing();
+                Playlist *to_play=pl->next;
                 pl->song->loaded=0;
-                if (pl->next!=NULL) to_play=pl->next;
-                else {
-                    while (pl->prev!=NULL) pl=pl->prev;
-                    to_play=pl;
-                }
                 er=load_song(to_play->song->audio_loc);
                 if (er) {
                     (*current_state)->playing=0;
@@ -272,13 +272,14 @@ void *manage_song_state(void *args) {
                 if (*screen==MUSIC_CONTR) {
                     clear();
                     print_page_heading(MUSIC_CONTR);
-                    pl = *playlist;
-                    while (pl != NULL) {
-                        int min = pl->song->duration / 60;
-                        int sec = pl->song->duration % 60;
+                    pl=*playlist;
+                    while (1) {
+                        int min=pl->song->duration / 60;
+                        int sec=pl->song->duration % 60;
                         printf("%s %s - %s %02d:%02d\n", pl->song->id == (*current_state)->playing_song_id ? "->" : "  ",
                                pl->song->title, pl->song->artist, min, sec);
-                        pl = pl->next;
+                        if (pl->tail) break;
+                        pl=pl->next;
                     }
                     printf("\n\n\n%s (P) %s| Next Song (N) | Previous Song (R) | Back (B) | Quit (Q): ",
                            (*current_state)->playing ? "Pause" : "Play",
@@ -287,15 +288,20 @@ void *manage_song_state(void *args) {
                     clear();
                     print_page_heading(PLAYLIST);
                     pl=*playlist;
-                    while (pl!=NULL) {
-                        Song *song=pl->song;
-                        int min=song->duration/60;
-                        int sec=song->duration%60;
-                        printf("%s - %s %02d:%02d %s\n",song->title,song->artist,min,sec,
-                            (*current_state)->playing&&(*current_state)->playing_song_id==song->id?"- Now Playing":"");
-                        pl=pl->next;
+                    if (pl==NULL) {
+                        printf("Playlist is empty");
+                    } else {
+                        while (1) {
+                            Song *song=pl->song;
+                            int min=song->duration/60;
+                            int sec=song->duration%60;
+                            printf("%s - %s %02d:%02d %s\n",song->title,song->artist,min,sec,
+                                (*current_state)->playing&&(*current_state)->playing_song_id==song->id?"- Now Playing":"");
+                            if (pl->tail) break;
+                            pl=pl->next;
+                        }
                     }
-                    printf("\n\n\nEdit Playlist (E) |%s Back (B) | Quit (Q): ",playlist==NULL?"":" Music Controls (C) |");
+                    printf("\n\n\nEdit Playlist (E) |%s Back (B) | Quit (Q): ",*playlist==NULL?"":" Music Controls (C) |");
                 }
             }
         }

@@ -10,10 +10,12 @@ ifeq ($(OS),Windows_NT)
     TARGET = CUnplugged.exe
     MKDIR = powershell -Command "New-Item -ItemType Directory -Force -Path $(dir $@)" > NUL
     RM = rmdir /S /Q
+    DEL = del /f
 else
     TARGET = CUnplugged
     MKDIR = mkdir -p $(dir $@)
     RM = rm -rf
+    DEL = rm -f
 endif
 
 all: $(TARGET)
@@ -27,4 +29,4 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	-$(RM) $(BUILD_DIR)
-	-$(RM) $(TARGET)
+	-$(DEL) $(TARGET)

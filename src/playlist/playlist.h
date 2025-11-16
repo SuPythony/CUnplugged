@@ -7,6 +7,8 @@ typedef struct Playlist {
     Song *song;
     struct Playlist *prev;
     struct Playlist *next;
+    int head;
+    int tail;
 } Playlist;
 
 typedef struct CurrentState {
