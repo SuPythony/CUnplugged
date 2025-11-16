@@ -78,7 +78,7 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
             while (song!=NULL) {
                 int min=song->duration/60;
                 int sec=song->duration%60;
-                printf("[%s] %s - %s %02d:%02d\n",ind==sel?"#":" ",song->title,song->artist,min,sec);
+                printf("[%s] %02d:%02d | %s - %s\n",ind==sel?"#":" ",min,sec,song->title,song->artist);
                 ind++;
                 song=song->next;
             }
@@ -295,7 +295,7 @@ Screen add_album_screen(Song *songs, Album **albums) {
             int min=song->duration/60;
             int sec=song->duration%60;
             printf(is_sel[ind]?NORMAL:DIM);
-            printf("[%s] %s - %s %02d:%02d\n",ind==sel?"#":" ",song->title,song->artist,min,sec);
+            printf("[%s] %02d:%02d | %s - %s\n",ind==sel?"#":" ",min,sec,song->title,song->artist);
             printf(CRESET);
             ind++;
             song=song->next;
@@ -436,7 +436,7 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
             int min=song->duration/60;
             int sec=song->duration%60;
             printf(is_sel[ind]?NORMAL:DIM);
-            printf("[%s] %s - %s %02d:%02d\n",ind==sel?"#":" ",song->title,song->artist,min,sec);
+            printf("[%s] %02d:%02d | %s - %s\n",ind==sel?"#":" ",min,sec,song->title,song->artist);
             printf(CRESET);
             ind++;
             song=song->next;
@@ -627,7 +627,7 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
                 int min=song->duration/60;
                 int sec=song->duration%60;
                 printf(is_sel[ind]?NORMAL:DIM);
-                printf("[%s] %s - %s %02d:%02d\n",ind==sel?"#":" ",song->title,song->artist,min,sec);
+                printf("[%s] %02d:%02d | %s - %s\n",ind==sel?"#":" ",min,sec,song->title,song->artist);
                 printf(CRESET);
                 ind++;
                 song=song->next;
