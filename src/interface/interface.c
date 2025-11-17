@@ -419,11 +419,12 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
         song=song->next;
         ind++;
     }
+    int song_count=album->song_count;
     while (1) {
         clear();
         print_page_heading(EDIT_ALBUM);
         printf("Title: %s\n",album->title);
-        printf("%d Songs\n\n",album->song_count);
+        printf("%d Songs\n\n",song_count);
         if (n==0) {
             printf("No songs added in library yet\n");
             printf("Press enter to return...");
@@ -451,16 +452,14 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
             if (sel>0) sel--;
         } else if (!is_sel[sel]&&(inp=='A'||inp=='a')) {
             add_command("Add song (Edit Album)");
+            if (is_sel[sel]==0) song_count++;
             is_sel[sel]=1;
         } else if (is_sel[sel]&&(inp=='R'||inp=='r')) {
             add_command("Remove song (Edit Album)");
+            if (is_sel[sel]==1) song_count--;
             is_sel[sel]=0;
         } else if (inp=='S'||inp=='s') {
             add_command("Save (Edit Album)");
-            int song_count=0;
-            for (int i=0; i<n; i++) {
-                if (is_sel[i]) song_count++;
-            }
             if (song_count==0) {
                 printf("Select at least one song\n");
                 printf("Press enter to continue...");
