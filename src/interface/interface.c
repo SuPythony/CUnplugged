@@ -506,7 +506,7 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
 
 Screen logs_screen() {
     char f_name[100];
-    sprintf(f_name,"%s/log.txt",BASE_DIR);
+    sprintf(f_name,"log.txt");
     while (1) {
         clear();
         print_page_heading(LOGS);
