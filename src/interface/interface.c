@@ -87,9 +87,11 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
             if (inp=='D'||inp=='d') {
                 add_command("Move down (Songs)");
                 if (sel<n-1) sel++;
+                else sel=0;
             } else if (inp=='U'||inp=='u') {
                 add_command("Move up (Songs)");
                 if (sel>0) sel--;
+                else sel=n-1;
             } else if (inp=='A'||inp=='a') {
                 add_command("Add song (Songs)");
                 res=ADD_SONG;
@@ -120,8 +122,8 @@ Screen songs_screen(Song **songs, Album *albums, Playlist **playlist, CurrentSta
                         ind++;
                         song=song->next;
                     }
-                    sel=0;
-                    n=length_songs(*songs);
+                    n--;
+                    if (sel>0) sel--;
                 } else {
                     add_command("No (Songs)");
                 }
@@ -214,9 +216,11 @@ AlbumsScreenReturn albums_screen(Album **albums) {
             if (inp=='D'||inp=='d') {
                 add_command("Move down (Albums)");
                 if (sel<n-1) sel++;
+                else sel=0;
             } else if (inp=='U'||inp=='u') {
                 add_command("Move up (Albums)");
                 if (sel>0) sel--;
+                else sel=n-1;
             } else if (inp=='A'||inp=='a') {
                 add_command("Add album (Albums)");
                 res.screen=ADD_ALBUM;
@@ -238,8 +242,8 @@ AlbumsScreenReturn albums_screen(Album **albums) {
                         ind++;
                         album=album->next;
                     }
-                    sel=0;
-                    n=length_albums(*albums);
+                    n--;
+                    if (sel>0) sel--;
                 } else {
                     add_command("No (Albums)");
                 }
@@ -305,9 +309,11 @@ Screen add_album_screen(Song *songs, Album **albums) {
         if (inp=='D'||inp=='d') {
             add_command("Move down (Add Album)");
             if (sel<n-1) sel++;
+            else sel=0;
         } else if (inp=='U'||inp=='u') {
             add_command("Move up (Add Album)");
             if (sel>0) sel--;
+            else sel=n-1;
         } else if (!is_sel[sel]&&(inp=='A'||inp=='a')) {
             add_command("Add song (Add Album)");
             is_sel[sel]=1;
@@ -447,9 +453,11 @@ Screen edit_album_screen(Song *songs, Album *albums, int album_ind) {
         if (inp=='D'||inp=='d') {
             add_command("Move down (Edit Album)");
             if (sel<n-1) sel++;
+            else sel=0;
         } else if (inp=='U'||inp=='u') {
             add_command("Move up (Edit Album)");
             if (sel>0) sel--;
+            else sel=n-1;
         } else if (!is_sel[sel]&&(inp=='A'||inp=='a')) {
             add_command("Add song (Edit Album)");
             if (is_sel[sel]==0) song_count++;
@@ -617,22 +625,7 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
             }
         }
         printf("\n\n");
-        printf("Songs:\n\n");
-        song=songs;
-        if (song==NULL) {
-            printf("No songs added yet\n");
-        } else {
-            while (song!=NULL) {
-                int min=song->duration/60;
-                int sec=song->duration%60;
-                printf(is_sel[ind]?NORMAL:DIM);
-                printf("[%s] %02d:%02d | %s - %s\n",ind==sel?"#":" ",min,sec,song->title,song->artist);
-                printf(CRESET);
-                ind++;
-                song=song->next;
-            }
-        }
-        printf("\nAlbums:\n\n");
+        printf("Albums:\n\n");
         Album *album=albums;
         if (album==NULL) {
             printf("No albums added yet\n");
@@ -643,27 +636,44 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
                 album=album->next;
             }
         }
-        printf("\n\n\nDown (D) | Up (U) | %s | Add all songs (L) | Clear playlist (C) | Back (B) | Quit (Q): ",sel<n&&is_sel[sel]?"Remove from playlist (R)":"Add to playlist (A)");
+        printf("\nSongs:\n\n");
+        song=songs;
+        if (song==NULL) {
+            printf("No songs added yet\n");
+        } else {
+            while (song!=NULL) {
+                int min=song->duration/60;
+                int sec=song->duration%60;
+                printf(is_sel[ind-n2]?NORMAL:DIM);
+                printf("[%s] %02d:%02d | %s - %s\n",ind==sel?"#":" ",min,sec,song->title,song->artist);
+                printf(CRESET);
+                ind++;
+                song=song->next;
+            }
+        }
+        printf("\n\n\nDown (D) | Up (U) | %s | Add all songs (L) | Clear playlist (C) | Back (B) | Quit (Q): ",sel>=n2&&is_sel[sel-n2]?"Remove from playlist (R)":"Add to playlist (A)");
         char inp=char_inp();
         if (inp=='D'||inp=='d') {
             add_command("Move down (Edit Playlist)");
             if (sel<n+n2-1) sel++;
+            else sel=0;
         } else if (inp=='U'||inp=='u') {
             add_command("Move up (Edit Playlist)");
             if (sel>0) sel--;
-        } else if ((sel>=n||!is_sel[sel])&&(inp=='A'||inp=='a')) {
-            if (sel<n) {
+            else sel=n+n2-1;
+        } else if ((sel<n2||!is_sel[sel-n2])&&(inp=='A'||inp=='a')) {
+            if (sel>=n2) {
                 add_command("Add song (Edit Playlist)");
-                is_sel[sel]=1;
+                is_sel[sel-n2]=1;
                 song=songs;
-                for (int i=0; i<sel; i++) {
+                for (int i=0; i<sel-n2; i++) {
                     song=song->next;
                 }
                 *playlist=add_song_to_playlist(*playlist,song);
             } else {
                 add_command("Add album (Edit Playlist)");
                 album=albums;
-                for (int i=0; i<sel-n; i++) {
+                for (int i=0; i<sel; i++) {
                     album=album->next;
                 }
                 *playlist=add_album_to_playlist(*playlist,album,songs);
@@ -684,10 +694,10 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
                     song=song->next;
                 }
             }
-        } else if (sel<n&&is_sel[sel]&&(inp=='R'||inp=='r')) {
+        } else if (sel>=n2&&is_sel[sel-n2]&&(inp=='R'||inp=='r')) {
             add_command("Remove song (Edit Playlist)");
             song=songs;
-            for (int i=0; i<sel; i++) {
+            for (int i=0; i<sel-n2; i++) {
                 song=song->next;
             }
             if (current_state->playing&&current_state->playing_song_id==song->id) {
@@ -695,7 +705,7 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
                 getchar();
                 continue;
             }
-            is_sel[sel]=0;
+            is_sel[sel-n2]=0;
             if (current_state->playing_song_id==song->id) {
                 current_state->playing_song_id=0;
             }
