@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "command_log/command_log.h"
-#include "utils/utils.h"
 #include "time.h"
 #include "string.h"
 

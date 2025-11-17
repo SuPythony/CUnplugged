@@ -387,7 +387,7 @@ Screen view_album_screen(Song *songs, Album *albums, int album_ind) {
             if (in_album) {
                 int min=song->duration/60;
                 int sec=song->duration%60;
-                printf("%s - %s %02d:%02d\n",song->title,song->artist,min,sec);
+                printf("%02d:%02d | %s - %s\n",min,sec,song->title,song->artist);
             }
             song=song->next;
         }
@@ -549,7 +549,7 @@ Screen playlist_screen(Playlist *playlist, CurrentState *current_state) {
                 Song *song=pl->song;
                 int min=song->duration/60;
                 int sec=song->duration%60;
-                printf("%s - %s %02d:%02d %s\n",song->title,song->artist,min,sec,
+                printf("%02d:%02d | %s - %s %s\n",min,sec,song->title,song->artist,
                     current_state->playing&&current_state->playing_song_id==song->id?"- Now Playing":"");
                 if (pl->tail) break;
                 pl=pl->next;
@@ -618,7 +618,7 @@ Screen edit_playlist_screen(Playlist **playlist, Song *songs, Album *albums, Cur
                 song=pl->song;
                 int min=song->duration/60;
                 int sec=song->duration%60;
-                printf("%s - %s %02d:%02d %s\n",song->title,song->artist,min,sec,
+                printf("%02d:%02d | %s - %s %s\n",min,sec,song->title,song->artist,
                     current_state->playing&&current_state->playing_song_id==song->id?"- Now Playing":"");
                 if (pl->tail) break;
                 pl=pl->next;
