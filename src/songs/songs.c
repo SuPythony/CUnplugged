@@ -73,7 +73,7 @@ Song *load_songs() {
 Song *create_new_song(Song *songs, char *title, char *artist, int dur, char *loc) {
     char f_name[250];
     char id[100];
-    sprintf(id,"%d%d%d",toupper(title[0]),(rand()*rand())%9000+1000,(rand()*rand())%9000+1000);
+    sprintf(id,"%d%lld%lld",toupper(title[0]),((long long)rand()*rand())%9000+1000,((long long)rand()*rand())%9000+1000);
     sprintf(f_name,"%s/songs/%s.txt",BASE_DIR,id);
     FILE *f=fopen(f_name,"w");
     fprintf(f,"%s\n",id);

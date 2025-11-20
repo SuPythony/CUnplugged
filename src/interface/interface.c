@@ -23,10 +23,12 @@ Screen library_screen() {
         char inp=char_inp();
         if (inp=='D'||inp=='d') {
             add_command("Move down (Library)");
-            if (sel<n-1) sel++;;
+            if (sel<n-1) sel++;
+            else sel=0;
         } else if (inp=='U'||inp=='u') {
             add_command("Move up (Library)");
             if (sel>0) sel--;
+            else sel=n-1;
         } else if (inp=='S'||inp=='s') {
             add_command("Select (Library)");
             break;
@@ -156,9 +158,14 @@ Screen add_song_screen(Song **songs) {
         printf("Enter song artist(s) name: ");
         scanf(" %[^\n]",artist);
     }
-    while (duration==0) {
+    while (1) {
         printf("Enter song duration (in seconds): ");
         scanf("%d",&duration);
+        if (clear_buffer()>0||duration<=0) {
+            printf("Please enter an integer greater than 0\n\n");
+            continue;
+        }
+        break;
     }
     printf("\n(Save the song audio file in library/songs/audios)\n");
     while (strlen(audio_file)==0) {

@@ -20,9 +20,11 @@ void clear() {
 #endif
 }
 
-void clear_buffer() {
+int clear_buffer() {
     char c;
-    while ((c=getchar())!='\n'&&c!=EOF);
+    int n=0;
+    while ((c=getchar())!='\n'&&c!=EOF) n++;
+    return n;
 }
 
 char char_inp() {
