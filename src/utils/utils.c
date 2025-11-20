@@ -10,6 +10,7 @@
 #include "audio_controller/audio_controller.h"
 #include <string.h>
 #include <sys/stat.h>
+#include <pthread.h>
 
 void clear() {
     fflush(stdout);
@@ -236,6 +237,8 @@ void free_playlist(Playlist *list) {
 }
 
 void *manage_song_state(void *args) {
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
     Playlist **playlist=((SongStateArgs*)args)->playlist;
     CurrentState **current_state=((SongStateArgs*)args)->current_state;
     Screen *screen=((SongStateArgs*)args)->screen;
@@ -326,6 +329,7 @@ void *manage_song_state(void *args) {
             printf("%s",s);
             printed=1;
         } else printed=0;
+        pthread_testcancel();
     }
     return NULL;
 }

@@ -79,6 +79,8 @@ int main() {
     outro();
     uninit_audio();
     free_memory(songs,albums,playlist,current_state);
+    pthread_cancel(song_state_thread);
+    pthread_join(song_state_thread,NULL);
     return 0;
 }
 
